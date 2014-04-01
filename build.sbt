@@ -14,12 +14,16 @@ val project = Project(
       "com.typesafe.akka" %% "akka-contrib" % akkaVersion,
       "com.typesafe.akka" %% "akka-multi-node-testkit" % akkaVersion,
       "org.scalatest" %% "scalatest" % "2.0" % "test",
-      "commons-io" % "commons-io" % "2.4" % "test"),
+      "commons-io" % "commons-io" % "2.4" % "test",
+      "org.apache.logging.log4j" % "log4j-api" % "2.0-rc1",
+      "org.apache.logging.log4j" % "log4j-core" % "2.0-rc1",
+      "org.apache.logging.log4j" % "log4j-slf4j-impl" % "2.0-rc1",
+      "com.github.scullxbones" %% "akka-persistence-mongo-casbah" % "0.0.8"),
     // make sure that MultiJvm test are compiled by the default test compilation
     compile in MultiJvm <<= (compile in MultiJvm) triggeredBy (compile in Test),
     // disable parallel tests
     parallelExecution in Test := false,
-    // make sure that MultiJvm tests are executed by the default test target, 
+    // make sure that MultiJvm tests are executed by the default test target,
     // and combine the results from ordinary test and multi-jvm tests
     executeTests in Test <<= (executeTests in Test, executeTests in MultiJvm) map {
       case (testResults, multiNodeResults)  =>
